@@ -184,10 +184,40 @@ function se_footnote(obj, children) {
 
 export const FOOTNOTE = inline('footnote', de_footnote, 'footnote', se_footnote)
 
+/**
+ * Process data for foreign.
+ */
+function de_foreign(el) {
+    return {
+        object: 'inline',
+        type: 'foreign',
+        data: {
+            lang: el.getAttribute('lang'),
+        },
+    }
+}
+
+/**
+ * Serializer for foreign.
+ */
+function se_foreign(obj, children) {
+    const attrs = {}
+    const lang = obj.data.get('lang')
+
+    if (lang) {
+        attrs.lang = lang
+    }
+
+    return <foreign {...attrs}>{children}</foreign>
+}
+
+export const FOREIGN = inline('foreign', de_foreign, 'foreign', se_foreign)
+
 export const TEXT_CONTENT = [
     DOCUMENT_REFERENCE,
     EMPHASIS,
     FOOTNOTE,
+    FOREIGN,
     LINK,
     STRONG,
     SUBSCRIPT,
