@@ -12,6 +12,8 @@ import React from 'react'
 
 import {
     block,
+    convertDataToAttributes,
+    loadAttributes,
     loadClasses,
     mixed,
     mixedContent,
@@ -130,17 +132,68 @@ export const FIGURE = block(
 /**
  * Process data for images.
  */
-function image(el) {
+function de_image(el) {
     return {
         type: 'image',
         isVoid: true,
-        data: {
-            src: el.getAttribute('src'),
-        },
+        data: loadAttributes(el),
     }
 }
 
-export const IMAGE = block('image', image, 'image', 'image')
+/**
+ * Serializer for images.
+ */
+function se_image(obj) {
+    const attrs = convertDataToAttributes(obj.data)
+
+    return <image {...attrs} />
+}
+
+export const IMAGE = block('image', de_image, 'image', se_image)
+
+/**
+ * Process data for audio.
+ */
+function de_audio(el) {
+    return {
+        type: 'audio',
+        isVoid: true,
+        data: loadAttributes(el),
+    }
+}
+
+/**
+ * Serializer for audio.
+ */
+function se_audio(obj) {
+    const attrs = convertDataToAttributes(obj.data)
+
+    return <audio {...attrs} />
+}
+
+export const AUDIO = block('audio', de_audio, 'audio', se_audio)
+
+/**
+ * Process data for video.
+ */
+function de_video(el) {
+    return {
+        type: 'video',
+        isVoid: true,
+        data: loadAttributes(el),
+    }
+}
+
+/**
+ * Serializer for video.
+ */
+function se_video(obj) {
+    const attrs = convertDataToAttributes(obj.data)
+
+    return <video {...attrs} />
+}
+
+export const VIDEO = block('video', de_video, 'video', se_video)
 
 /**
  * Process data for list nodes.
@@ -290,6 +343,7 @@ export const TITLE = block('title', text('title'), 'title', 'title')
 
 export const DOCUMENT = [
     ADMONITION,
+    AUDIO,
     FIGURE_CAPTION,
     CODE,
     COMMENTARY,
@@ -307,4 +361,5 @@ export const DOCUMENT = [
     SECTION,
     SOLUTION,
     TITLE,
+    VIDEO,
 ]

@@ -42,10 +42,16 @@ function normalizeMedia(change, error) {
 export default function schema({ inlines }) {
     return {
         blocks: {
-            // TODO: do we actually want to keep multiple versions?
             media: {
                 nodes: [
-                    { match: { type: 'image' }, min: 1 },
+                    {
+                        match: [
+                            { type: 'audio' },
+                            { type: 'image' },
+                            { type: 'video' },
+                        ],
+                        min: 1,
+                    },
                     { match: { type: 'media_alt' }, min: 1, max: 1 },
                 ],
                 normalize: normalizeMedia,
@@ -59,11 +65,49 @@ export default function schema({ inlines }) {
                 }],
                 marks: [],
             },
-            // TODO: if we do, add target attribute.
+            audio: {
+                isVoid: true,
+                data: {
+                    src: s => typeof s === 'string',
+                    mime: m => typeof m === 'string',
+                    for: s => s == null || ['default', 'pdf', 'online'],
+                    standby: s => s == null || typeof s === 'string',
+                    autoplay: a => a == null || typeof a === 'boolean',
+                    loop: l => l == null || typeof l === 'boolean',
+                    controller: c => c == null || typeof c === 'boolean',
+                    volume: v => v == null
+                      || (typeof v === 'number' && 0 < v && v <= 100),
+                    longdesc: l => l == null || typeof l === 'string',
+                },
+            },
             image: {
                 isVoid: true,
                 data: {
-                    src: Boolean,
+                    src: s => typeof s === 'string',
+                    mime: m => typeof m === 'string',
+                    for: s => s == null || ['default', 'pdf', 'online'],
+                    height: h => h == null || typeof h === 'number',
+                    width: w => w == null || typeof w === 'number',
+                    "print-width": p => p == null || /[0-9]+[a-z]+/.test(p),
+                    thumbnail: t => t == null || typeof t === 'string',
+                    longdesc: l => l == null || typeof l === 'string',
+                },
+            },
+            video: {
+                isVoid: true,
+                data: {
+                    src: s => typeof s === 'string',
+                    mime: m => typeof m === 'string',
+                    for: s => s == null || ['default', 'pdf', 'online'],
+                    standby: s => s == null || typeof s === 'string',
+                    autoplay: a => a == null || typeof a === 'boolean',
+                    loop: l => l == null || typeof l === 'boolean',
+                    controller: c => c == null || typeof c === 'boolean',
+                    volume: v => v == null
+                      || (typeof v === 'number' && 0 < v && v <= 100),
+                    longdesc: l => l == null || typeof l === 'string',
+                    height: h => h == null || typeof h === 'number',
+                    width: w => w == null || typeof w === 'number',
                 },
             },
         },
