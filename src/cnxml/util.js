@@ -362,6 +362,42 @@ export function loadClasses(el) {
 }
 
 /**
+ * Return element's attributes as an object.
+ */
+export function loadAttributes(el) {
+    const attrs = {}
+
+    for (const attr of el.attributes) {
+        if (attr.name === 'mime-type') {
+            attrs.mime = attr.value
+            continue
+        }
+        attrs[attr.name] = attr.value
+    }
+
+    return attrs
+}
+
+/**
+ * Convert Slate~Data to attributes for cnxml node element.
+ * @param {Slate~Data} data
+ */
+export function convertDataToAttributes(data) {
+    const attrs = {}
+    for (const [attr, val] of data.entries()) {
+        if (attr === 'class') {
+            attrs[attr] = val.join(' ')
+            continue
+        } else if (attr === 'mime') {
+            attrs['mime-type'] = val
+            continue
+        }
+        attrs[attr] = val
+    }
+    return attrs
+}
+
+/**
  * Default handler.
  *
  * When Slate can't find handler for a particular element it will skip it and
