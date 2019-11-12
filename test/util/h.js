@@ -2,6 +2,7 @@ import { createHyperscript } from 'slate-hyperscript'
 
 export default global.h = createHyperscript({
     blocks: {
+        audio: 'audio',
         code: 'code',
         definition: 'definition',
         defterm: 'definition_term',
@@ -38,6 +39,7 @@ export default global.h = createHyperscript({
         },
         title: 'title',
         ul: 'ul_list',
+        video: 'video',
         warning: {
             type: 'admonition',
             data: { type: 'warning' },

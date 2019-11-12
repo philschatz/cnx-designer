@@ -1,9 +1,9 @@
 /** @jsx h */
 
 export default editor => editor.insertFigure({
-    mime: 'image/png',
-    name: 'first.png',
-    alt: 'First picture',
+    mime: 'video/mpeg',
+    name: 'video.mpg',
+    alt: 'Video alt',
 })
 
 export const input = <value>
@@ -16,11 +16,11 @@ export const output = <value>
     <document>
         <p><text/></p>
         <figure>
-            <media alt="First picture">
-                <img src="first.png" mime="image/png">
+            <media alt="Video alt">
+                <video src="video.mpg" mime="video/mpeg">
                     <text><cursor/></text>
-                </img>
-                <mediaalt>First picture</mediaalt>
+                </video>
+                <mediaalt>Video alt</mediaalt>
             </media>
         </figure>
     </document>
