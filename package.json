@@ -6,7 +6,6 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "private": true,
-  "files": ["dist"],
   "dependencies": {
     "@babel/runtime": "^7.1.5",
     "immutable": "^3.8.2",
